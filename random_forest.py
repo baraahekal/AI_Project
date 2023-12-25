@@ -14,7 +14,7 @@ random_forest = RandomForestClassifier()
 random_forest.fit(X_train, y_train)
 y_pred_random_forest = random_forest.predict(X_test)
 accuracy_random_forest = accuracy_score(y_test, y_pred_random_forest)
-print(f"Random Forest Accuracy: {accuracy_random_forest}")
+print("Accuracy:", accuracy_random_forest)
 
 
 from sklearn.model_selection import cross_val_score
