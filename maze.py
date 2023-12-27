@@ -7,15 +7,15 @@ import customtkinter
 from PIL import Image
 
 
-
 class MazeDrawer:
-    def __init__(self, rows, cols):
+    def __init__(self, rows, cols, screen_width=None, screen_height=None):
         self.start_cell = None
         self.goal_cells = []
         self.rows = rows
         self.cols = cols
-        customtkinter.set_appearance_mode("Dark")
         self.root = customtkinter.CTk()
+        # Change the background color of the canvas to a dark color (e.g., "#333333")
+        self.canvas = customtkinter.CTkCanvas(self.root, width=screen_width, height=screen_height, bg="#333333")
 
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -32,16 +32,16 @@ class MazeDrawer:
         self.is_running = False
         self.delete = False
 
-        run_button = customtkinter.CTkButton(self.root, text="Run BFS", command=self.bfs_search)
-        dfs_button = customtkinter.CTkButton(self.root, text="Run DFS", command=self.dfs_search)
-        greedy_button = customtkinter.CTkButton(self.root, text="Run Greedy", command=self.greedy_search)
-        switch_button = customtkinter.CTkSwitch(self.root, text='Eraser', command=self.Switch, corner_radius=10)
+        run_button = customtkinter.CTkButton(self.root, text="Run BFS", command=self.bfs_search, bg_color='white', corner_radius=10)
+        dfs_button = customtkinter.CTkButton(self.root, text="Run DFS", command=self.dfs_search, bg_color='white',  corner_radius=10)
+        greedy_button = customtkinter.CTkButton(self.root, text="Run Greedy", command=self.greedy_search, bg_color='white',  corner_radius=10)
+        switch_button = customtkinter.CTkSwitch(self.root, text='Eraser', command=self.Switch, corner_radius=40, bg_color='white', text_color='black')
 
         dy = 200
-        dfs_button.place(x=screen_width - 450, y=70+dy)
-        run_button.place(x=screen_width - 450, y=105+dy)
-        greedy_button.place(x=screen_width - 450, y=140+dy)
-        switch_button.place(x=screen_width - 450, y=175+dy)
+        dfs_button.place(x=screen_width - 500, y=70+dy)
+        run_button.place(x=screen_width - 500, y=105+dy)
+        greedy_button.place(x=screen_width - 500, y=140+dy)
+        switch_button.place(x=screen_width - 475, y=175+dy)
 
         self.width = screen_width // cols
         self.height = (screen_height - 100) // rows
@@ -379,7 +379,7 @@ if __name__ == "__main__":
     app.title("Maze")
     app.config(background="Black")
 
-    image_path = os.path.join(os.path.dirname(__file__), 't.png')
+    image_path = os.path.join(os.path.dirname(__file__), 'images/Maze_icon.png')
     image = customtkinter.CTkImage(light_image=Image.open(image_path), size=(100,100))
     image_label = customtkinter.CTkLabel(app, image=image, text="")
     image_label.place(relx=0.5, rely=0.3, anchor='center')
