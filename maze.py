@@ -14,15 +14,10 @@ class MazeDrawer:
         self.rows = rows
         self.cols = cols
         self.root = customtkinter.CTk()
+
         # Change the background color of the canvas to a dark color (e.g., "#333333")
         self.canvas = customtkinter.CTkCanvas(self.root, width=screen_width, height=screen_height, bg="#333333")
-
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        self.root.geometry(f"{screen_width}x{screen_height}")
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window closing
-        self.canvas = customtkinter.CTkCanvas(self.root, width=screen_width, height=screen_height, bg="white")
-        self.canvas.pack()
+        self.canvas.pack(expand=True, fill='both')  # Maximize the canvas view
         self.canvas.bind("<B1-Motion>", self.draw_wall)
         self.canvas.bind("<Button-1>", self.start_drawing)
         self.canvas.bind("<Button-3>", self.set_start_or_goal)
@@ -32,10 +27,15 @@ class MazeDrawer:
         self.is_running = False
         self.delete = False
 
-        run_button = customtkinter.CTkButton(self.root, text="Run BFS", command=self.bfs_search, bg_color='white', corner_radius=10)
-        dfs_button = customtkinter.CTkButton(self.root, text="Run DFS", command=self.dfs_search, bg_color='white',  corner_radius=10)
-        greedy_button = customtkinter.CTkButton(self.root, text="Run Greedy", command=self.greedy_search, bg_color='white',  corner_radius=10)
-        switch_button = customtkinter.CTkSwitch(self.root, text='Eraser', command=self.Switch, corner_radius=40, bg_color='white', text_color='black')
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        self.root.geometry(f"{screen_width}x{screen_height}")
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window closing
+
+        run_button = customtkinter.CTkButton(self.root, text="Run BFS", command=self.bfs_search, bg_color='#333333', corner_radius=10)
+        dfs_button = customtkinter.CTkButton(self.root, text="Run DFS", command=self.dfs_search, bg_color='#333333',  corner_radius=10)
+        greedy_button = customtkinter.CTkButton(self.root, text="Run Greedy", command=self.greedy_search, bg_color='#333333',  corner_radius=10)
+        switch_button = customtkinter.CTkSwitch(self.root, text='Eraser', command=self.Switch, corner_radius=40, bg_color='#333333')
 
         dy = 200
         dfs_button.place(x=screen_width - 500, y=70+dy)
@@ -56,6 +56,7 @@ class MazeDrawer:
                 fill_color = "black" if self.maze[row][col] == 0 else "white"
                 self.canvas.create_rectangle(col * self.width, row * self.height, (col + 1) * self.width,
                                              (row + 1) * self.height, fill=fill_color)
+
 
     def draw_wall(self, event):
         if self.drawing and not self.delete:
