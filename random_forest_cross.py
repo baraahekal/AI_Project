@@ -7,6 +7,8 @@ from sklearn.metrics import accuracy_score
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
+print("Dataset Size:", X.shape)
+
 
 # Split dataset into {60% train, 20% test}
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.4, random_state=42)
